@@ -1,0 +1,11 @@
+.person{
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+	align-items: flex-start;
+	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+	border-radius: 10px;
+	padding: 3rem;
+	min-width: 200px;
+	background-color: white;
+ }
