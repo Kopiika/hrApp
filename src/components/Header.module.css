@@ -1,0 +1,14 @@
+.header{
+	border-bottom: 3px solid black;
+	padding: 1.5rem;
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-start;
+	align-items: center;
+ }
+
+ .logo{
+	text-align: left;
+	font-weight: 600;
+	font-size: 1.5rem;
+ }
