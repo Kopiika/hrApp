@@ -1,0 +1,14 @@
+.personList {
+	width: 100%;
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); /* 3 колонки, адаптивні */
+	gap: 1.5rem; 
+	padding: 1rem;
+	justify-items: center; 
+	align-items: start;
+ }
+ 
+ .personList > * {
+	width: 100%;
+  height: 100%;
+ }
