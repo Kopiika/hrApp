@@ -1,0 +1,43 @@
+.person {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: flex-start;
+	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+	border-radius: 10px;
+	padding: 3rem;
+	background-color: white;
+	width: 100%;
+	transition: transform 0.2s ease, box-shadow 0.2s ease;
+	height: 100%;
+	gap: 5px;
+ }
+ 
+ .person h2 {
+	margin-bottom: 10px;
+	font-size: 2rem;
+ }
+ 
+ .person:hover {
+	transform: translateY(-5px);
+	box-shadow: 0 6px 14px rgba(0, 0, 0, 0.12);
+ }
+ 
+ .reminder {
+	margin-top: 1rem;
+	padding: 0.75rem 1rem;
+	border-radius: 8px;
+	font-size: 0.95rem;
+	font-weight: 500;
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+	letter-spacing: 0.2px;
+	background-color: rgb(210, 245, 188);
+	border: 1px solid rgb(92, 132, 67);
+	font-weight: 500;
+	color: rgb(87, 142, 59);
+	text-align: center;
+	width: 100%;
+ }
+ 
