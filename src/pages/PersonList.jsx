@@ -1,10 +1,10 @@
 import { useState } from "react";
 import styles from "./PersonList.module.css";
-import PersonCard from "./PersonCard";
+import PersonCard from "../components/PersonCard";
 import data from "../data";
 
-const PersonList = () => {
-  const [employees, setEmployees] = useState(data);
+const PersonList = ({employees}) => {
+  
 
   return (
     <div className={styles.personList}>

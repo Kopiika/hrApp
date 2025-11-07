@@ -1,14 +1,36 @@
 .header{
-	border-bottom: 3px solid black;
+	border-bottom: 3px solid rgb(2, 42, 90);
 	padding: 1.5rem;
 	display: flex;
 	flex-direction: row;
-	justify-content: flex-start;
+	justify-content: space-between;
 	align-items: center;
  }
 
  .logo{
-	text-align: left;
 	font-weight: 600;
 	font-size: 1.5rem;
+	color: rgb(2, 42, 90);
+ }
+
+ .navMenu{
+	display: flex;
+	gap: 2rem;
+ }
+
+ .link {
+	color: rgb(2, 42, 90);
+	text-decoration: none;
+	font-weight: 600;
+	transition: color 0.2s ease;
+	line-height: 1.5;
+ }
+ 
+ .link:hover {
+	color: rgb(71, 61, 255);
+ }
+ 
+ .active {
+	color: rgb(71, 61, 255);
+	border-bottom: 2px solid rgb(71, 61, 255);
  }
