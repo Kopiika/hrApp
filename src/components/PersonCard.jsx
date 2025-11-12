@@ -1,7 +1,7 @@
 import styles from './PersonCard.module.css';
 import { Icon } from "@iconify/react";
 
-const PersonCard = ({ employee }) => {
+const PersonCard = ({ employee, handleDeleteEmployee }) => {
   // Parse the start date string into a Date object
   const start = new Date(employee.startDate);
   const today = new Date();
@@ -92,6 +92,9 @@ const PersonCard = ({ employee }) => {
 		<p>Location: {employee.location}</p>
 		<p>Department: {employee.department}</p>
 		<p>Skills: {employee.skills.join(", ")}</p>
+		<button className={styles.deleteBtn} onClick={() => handleDeleteEmployee(employee.id)}>
+        Delete Person
+      </button>
 		{reminder}
 	 </div>
   );

@@ -1,0 +1,174 @@
+{
+  "employees": [
+    {
+      "id": "1",
+      "name": "Aino Virtanen",
+      "title": "HR Manager",
+      "salary": 4200,
+      "phone": "040-1234567",
+      "email": "aino.virtanen@example.com",
+      "animal": "Owl",
+      "startDate": "2018-04-01",
+      "location": "Helsinki",
+      "department": "Human Resources",
+      "skills": [
+        "Recruiting",
+        "Communication",
+        "Employee Relations"
+      ]
+    },
+    {
+      "id": "2",
+      "name": "Mikko Laine",
+      "title": "Software Engineer",
+      "salary": 5500,
+      "phone": "040-2345678",
+      "email": "mikko.laine@example.com",
+      "animal": "Fox",
+      "startDate": "2019-06-15",
+      "location": "Tampere",
+      "department": "IT",
+      "skills": [
+        "JavaScript",
+        "React",
+        "Node.js"
+      ]
+    },
+    {
+      "id": "3",
+      "name": "Sari Korhonen",
+      "title": "Marketing Specialist",
+      "salary": 3800,
+      "phone": "050-3456789",
+      "email": "sari.korhonen@example.com",
+      "animal": "Dolphin",
+      "startDate": "2020-03-01",
+      "location": "Turku",
+      "department": "Marketing",
+      "skills": [
+        "SEO",
+        "Content Creation",
+        "Social Media"
+      ]
+    },
+    {
+      "id": "4",
+      "name": "Jari Nieminen",
+      "title": "Finance Analyst",
+      "salary": 4600,
+      "phone": "045-4567890",
+      "email": "jari.nieminen@example.com",
+      "animal": "Bear",
+      "startDate": "2010-11-03",
+      "location": "Helsinki",
+      "department": "Finance",
+      "skills": [
+        "Excel",
+        "Forecasting",
+        "Reporting"
+      ]
+    },
+    {
+      "id": "5",
+      "name": "Laura Salonen",
+      "title": "UX Designer",
+      "salary": 5000,
+      "phone": "040-5678901",
+      "email": "laura.salonen@example.com",
+      "animal": "Cat",
+      "startDate": "2021-01-20",
+      "location": "Espoo",
+      "department": "Design",
+      "skills": [
+        "Figma",
+        "User Research",
+        "Prototyping"
+      ]
+    },
+    {
+      "id": "6",
+      "name": "Tomi Heikkinen",
+      "title": "Data Scientist",
+      "salary": 6200,
+      "phone": "050-6789012",
+      "email": "tomi.heikkinen@example.com",
+      "animal": "Eagle",
+      "startDate": "2020-11-12",
+      "location": "Oulu",
+      "department": "Data & Analytics",
+      "skills": [
+        "Python",
+        "Machine Learning",
+        "SQL"
+      ]
+    },
+    {
+      "id": "7",
+      "name": "Elina Saarinen",
+      "title": "Project Manager",
+      "salary": 5300,
+      "phone": "044-7890123",
+      "email": "elina.saarinen@example.com",
+      "animal": "Dog",
+      "startDate": "2016-05-30",
+      "location": "Helsinki",
+      "department": "Operations",
+      "skills": [
+        "Leadership",
+        "Agile",
+        "Scheduling"
+      ]
+    },
+    {
+      "id": "8",
+      "name": "Juho Mäkelä",
+      "title": "Sales Executive",
+      "salary": 4700,
+      "phone": "040-8901234",
+      "email": "juho.makela@example.com",
+      "animal": "Tiger",
+      "startDate": "2015-11-01",
+      "location": "Tampere",
+      "department": "Sales",
+      "skills": [
+        "Negotiation",
+        "CRM",
+        "Customer Service"
+      ]
+    },
+    {
+      "id": "9",
+      "name": "Riikka Lehtonen",
+      "title": "Customer Support Lead",
+      "salary": 3900,
+      "phone": "050-9012345",
+      "email": "riikka.lehtonen@example.com",
+      "animal": "Rabbit",
+      "startDate": "2019-10-10",
+      "location": "Turku",
+      "department": "Customer Service",
+      "skills": [
+        "Problem Solving",
+        "Communication",
+        "Team Leadership"
+      ]
+    },
+    {
+      "id": "10",
+      "name": "Ville Koskinen",
+      "title": "Network Administrator",
+      "salary": 4800,
+      "phone": "046-0123456",
+      "email": "ville.koskinen@example.com",
+      "animal": "Wolf",
+      "startDate": "2025-06-18",
+      "location": "Oulu",
+      "department": "IT",
+      "skills": [
+        "Networking",
+        "Security",
+        "Linux"
+      ]
+    }
+  ]
+}

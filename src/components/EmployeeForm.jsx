@@ -59,7 +59,7 @@ function EmployeeForm ({ onSubmit }) {
     // - skills: перетворюємо рядок в масив, обрізаємо пробіли
 
 	 const newEmployee = {
-		id: Date.now(),
+		id: ((Date.now()).toString()),
 		name: formData.firstName.trim() + " " + formData.lastName.trim(),
 		title: formData.title.trim(),
       salary: formData.salary === "" ? 0 : Number(formData.salary),
