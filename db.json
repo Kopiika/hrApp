@@ -1,21 +1,21 @@
 {
   "employees": [
     {
-      "id": "1",
-      "name": "Aino Virtanen",
+      "name": "Anna Virtanen",
       "title": "HR Manager",
-      "salary": 4200,
-      "phone": "040-1234567",
-      "email": "aino.virtanen@example.com",
+      "phone": "050-1234567",
+      "email": "anna.virtanen@example.com",
       "animal": "Owl",
-      "startDate": "2018-04-01",
-      "location": "Helsinki",
+      "startDate": "2018-09-23",
+      "salary": "4960",
+      "location": "Tampere",
       "department": "Human Resources",
       "skills": [
         "Recruiting",
         "Communication",
         "Employee Relations"
-      ]
+      ],
+      "id": "1"
     },
     {
       "id": "2",
@@ -26,19 +26,20 @@
       "email": "mikko.laine@example.com",
       "animal": "Fox",
       "startDate": "2019-06-15",
-      "location": "Tampere",
+      "location": "Lahti",
       "department": "IT",
       "skills": [
         "JavaScript",
         "React",
-        "Node.js"
+        "Node.js",
+        "CSS"
       ]
     },
     {
       "id": "3",
       "name": "Sari Korhonen",
       "title": "Marketing Specialist",
-      "salary": 3800,
+      "salary": "3900",
       "phone": "050-3456789",
       "email": "sari.korhonen@example.com",
       "animal": "Dolphin",
@@ -168,6 +169,23 @@
         "Networking",
         "Security",
         "Linux"
+      ]
+    },
+    {
+      "id": "1763719993416",
+      "name": "Eleonora Kopiika",
+      "title": "Developer",
+      "salary": 4000,
+      "phone": "0453211234",
+      "email": "eleonora.kopiika@example.com",
+      "animal": "Cat",
+      "startDate": "2025-11-03",
+      "location": "Vantaa",
+      "department": "IT",
+      "skills": [
+        "React",
+        "CSS",
+        "UI&UX"
       ]
     }
   ]

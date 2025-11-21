@@ -1,4 +1,5 @@
 .person {
+	margin: 0 auto;
 	position: relative;
 	display: flex;
 	flex-direction: column;
@@ -9,39 +10,56 @@
 	padding: 3rem;
 	background-color: white;
 	width: 100%;
+	max-width: 700px;
 	transition: transform 0.2s ease, box-shadow 0.2s ease;
 	height: 100%;
 	gap: 5px;
 	cursor: pointer;
  }
  
+ .person h1{
+	margin-bottom: 2rem;
+	color: rgb(83, 82, 82);
+ }
+
+ .reminderContainer{
+	width: 100%;
+	padding: 0.5rem 1rem;
+	margin-bottom: 1rem;
+ }
+
  .person h2 {
-	margin-bottom: 10px;
+	width: 100%;
 	font-size: 2rem;
- }
- 
- .person:hover {
-	transform: translateY(-5px);
-	box-shadow: 0 6px 14px rgba(0, 0, 0, 0.12);
- }
- 
- .reminder {
-	margin-top: 1rem;
-	padding: 0.75rem 1rem;
-	border-radius: 8px;
-	font-size: 0.95rem;
-	font-weight: 500;
+	text-align: center;
+	justify-content: center;
 	display: flex;
 	align-items: center;
-	gap: 0.5rem;
-	letter-spacing: 0.2px;
-	background-color: rgb(210, 245, 188);
-	border: 1px solid rgb(92, 132, 67);
-	font-weight: 500;
-	color: rgb(87, 142, 59);
-	text-align: center;
-	width: 100%;
+	gap: 1rem;
+	margin-bottom: 2rem;
  }
+
+ p{
+	font-size: 1.2rem;
+ }
+
+ .row{
+	width: 100%;
+	display: flex;
+	align-items: center;
+	border-bottom: 1px dashed grey;
+	padding:0.5rem 1rem;
+ }
+ .label {
+	width: 130px;
+	font-weight: bold;
+	color: rgb(83, 82, 82);
+ }
+ 
+ .value {
+	flex: 1; 
+ }
+ 
  
  .deleteBtn{
 	position: absolute;
@@ -54,12 +72,32 @@
 	background-color: inherit;
 	border: none;
 	cursor: pointer;
-	color: rgb(71, 61, 255);
+	font-weight: 500;
+	color: rgb(83, 82, 82);
 	font-size: 0.9rem;
  }
 
+
  .deleteBtn:hover{
-	
+	color: red;
 	text-decoration: underline;
-	
  }
+
+ .saveMessage {
+	color: green;
+	margin-bottom: 10px;
+	font-weight: bold;
+ }
+
+ .buttonContainer{
+	width: 100%;
+	display: flex;
+	gap: 1rem;
+	margin-top: 2rem;
+	padding: 0 1.5rem;
+	justify-content: space-between;
+ }
+
+ 
+
+ 

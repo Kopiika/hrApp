@@ -104,11 +104,11 @@ const isInvalid = (field) => touched && !formData[field].trim();
 
 return (
 	<div className={styles.formContainer}>
-		<form className={styles.addPersonForm} onSubmit={handleSubmit}>
+		<form className="form" onSubmit={handleSubmit}>
 			<h2 className={styles.title}>Add new employee</h2>
 
 			<div>
-				<label className={styles.label} htmlFor="firstName">First Name:
+				<label htmlFor="firstName">First Name:
 					<input 
 						id="firstName" 
 						name="firstName" 
@@ -121,7 +121,7 @@ return (
 			</div>
 
 			<div>
-				<label className={styles.label} htmlFor="lastName">Last Name:
+				<label htmlFor="lastName">Last Name:
 					<input 
 						id="lastName" 
 						name="lastName" 
@@ -134,7 +134,7 @@ return (
 			</div>
 
 			<div>
-				<label className={styles.label} htmlFor="title">Title:
+				<label htmlFor="title">Title:
 					<input 
 						id="title" 
 						name="title" 
@@ -147,7 +147,7 @@ return (
 			</div>
 
 			<div>
-				<label className={styles.label} htmlFor="salary">Salary:
+				<label htmlFor="salary">Salary:
 					<input 
 						id="salary"
 						name="salary"  
@@ -160,7 +160,7 @@ return (
 			</div>
 
 			<div>
-				<label className={styles.label} htmlFor="phone">Phone:
+				<label htmlFor="phone">Phone:
 					<input 
 						id="phone"
 						name="phone"  
@@ -173,7 +173,7 @@ return (
 			</div>
 
 			<div>
-				<label className={styles.label} htmlFor="email">Email:
+				<label htmlFor="email">Email:
 					<input 
 						id="email"
 						name="email" 
@@ -187,7 +187,7 @@ return (
 			</div>
 
 			<div>
-				<label className={styles.label} htmlFor="animal">Favorite Animal
+				<label htmlFor="animal">Favorite Animal
 					<input 
 						id="animal"
 						name="animal" 
@@ -200,7 +200,7 @@ return (
 			</div>
 
 			<div>
-				<label className={styles.label} htmlFor="startDate">Start Date:
+				<label htmlFor="startDate">Start Date:
 					<input 
 						id="startDate"
 						name="startDate" 
@@ -214,7 +214,7 @@ return (
 			</div>
 
 			<div>
-				<label className={styles.label} htmlFor="location">Location:
+				<label htmlFor="location">Location:
 					<input 
 						id="location"
 						name="location" 
@@ -227,7 +227,7 @@ return (
 			</div>
 
 			<div>
-				<label className={styles.label} htmlFor="department">Department:
+				<label htmlFor="department">Department:
 					<input 
 						id="department"
 						name="department" 
@@ -240,7 +240,7 @@ return (
 			</div>
 
 			<div>
-				<label className={styles.label} htmlFor="skills">Skills:
+				<label htmlFor="skills">Skills:
 					<input 
 						id="skills"
 						name="skills" 
@@ -256,7 +256,7 @@ return (
 
 			<div className={styles.buttonWrapper}>
 				<button 
-					className={styles.button} 
+					className="saveBtn" 
 					type='submit'>Save Employee
 				</button>
 			</div>

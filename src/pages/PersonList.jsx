@@ -1,15 +1,13 @@
 import { useState } from "react";
 import styles from "./PersonList.module.css";
-import PersonCard from "../components/PersonCard";
-import data from "../data";
+import SummaryPersonCard from "../components/SummaryPersonCard";
 
-const PersonList = ({employees, handleDeleteEmployee}) => {
-  
+const PersonList = ({employees}) => {
 
   return (
     <div className={styles.personList}>
       {employees.map((employee) => (
-        <PersonCard key={employee.id} employee={employee} handleDeleteEmployee={handleDeleteEmployee} />
+        <SummaryPersonCard key={employee.id} employee={employee} />
       ))}
     </div>
   );

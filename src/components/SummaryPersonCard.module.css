@@ -1,0 +1,54 @@
+.card {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: flex-start;
+	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+	border-radius: 8px;
+	padding-bottom:1.5rem;
+	background-color: white;
+	width: 100%;
+	transition: transform 0.2s ease, box-shadow 0.2s ease;
+	height: 100%;
+ }
+ 
+ .card h2 {
+	margin-bottom: 10px;
+	font-size: 2rem;
+ }
+ 
+ .card:hover {
+	transform: translateY(-5px);
+	box-shadow: 0 6px 14px rgba(0, 0, 0, 0.12);
+ }
+
+ .cardHeader{
+	color: white;
+	background-color: grey;
+	width: 100%;
+	padding: 1.5rem;
+	border-radius: 8px 8px 0 0;
+ }
+
+ .cardBody{
+	width: 100%;
+	padding: 1.5rem;
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+ }
+
+.reminderContainer{
+	width: 100%;
+	padding: 0.5rem 1.5rem;
+	
+}
+
+ .cardFooter{
+	display: flex;
+	width: 100%;
+	justify-content: flex-end;
+	padding: 1rem 1.5rem 0rem;
+	border-top: 1px dashed grey;
+ }

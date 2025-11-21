@@ -1,5 +1,5 @@
 .header{
-	border-bottom: 3px solid rgb(2, 42, 90);
+	border-bottom: 2px solid rgb(74, 74, 74);
 	padding: 1.5rem;
 	display: flex;
 	flex-direction: row;
@@ -10,7 +10,7 @@
  .logo{
 	font-weight: 600;
 	font-size: 1.5rem;
-	color: rgb(2, 42, 90);
+	color: rgb(74, 74, 74);
  }
 
  .navMenu{
@@ -19,7 +19,7 @@
  }
 
  .link {
-	color: rgb(2, 42, 90);
+	color: rgb(74, 74, 74);
 	text-decoration: none;
 	font-weight: 600;
 	transition: color 0.2s ease;
@@ -27,10 +27,10 @@
  }
  
  .link:hover {
-	color: rgb(71, 61, 255);
+	color: #4ca9ca;
  }
  
  .active {
-	color: rgb(71, 61, 255);
-	border-bottom: 2px solid rgb(71, 61, 255);
+	color: #4ca9ca;
+	border-bottom: 2px solid #4ca9ca;
  }
