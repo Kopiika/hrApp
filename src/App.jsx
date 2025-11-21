@@ -8,6 +8,8 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 
 import PersonList from "./pages/PersonList";
+import PersonCard from "./components/PersonCard";
+import SummaryPersonCard from "./components/SummaryPersonCard";
 import AddEmployee from "./pages/AddEmployee";
 import About from "./pages/About";
 
@@ -39,6 +41,16 @@ function App() {
       setEmployees(employees.filter((employee) => employee.id !==id))
     })
     }
+  
+  /*const handleUpdateEmployee = (id, updatedEmployee) => {
+    axios.put(`http://localhost:3001/employees/${id}`, updatedEmployee)
+    .then((response) =>{
+      setEmployees(employees.map((employee) => employee.id === id ? response.data : employee)
+    )
+    return response.data;
+    })
+    .catch(err => console.error(err));
+  }*/
 
   return (
     <>
@@ -48,7 +60,8 @@ function App() {
            <div className='main'>
               <Routes>
                 {/* 🔸 передаємо employees у PersonList */}
-                <Route path="/" element={<PersonList employees={employees} handleDeleteEmployee={handleDeleteEmployee}/>} />
+                <Route path="/" element={<PersonList employees={employees} handleDeleteEmployee={handleDeleteEmployee} />} />
+                <Route path="/employees/:id" element={<PersonCard/>} />
                 <Route path="/about" element={<About/>} />
                 {/* 🔸 передаємо функцію у AddEmployee */}
                 <Route path="/add" element={<AddEmployee onAddEmployee={handleAddEmployee}/>} />

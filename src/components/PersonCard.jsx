@@ -1,101 +1,200 @@
+import axios from "axios"
+import { useParams, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useYearsWorked } from "../hooks/useYearsWorked";
+import Emoji from "./Emoji";
 import styles from './PersonCard.module.css';
-import { Icon } from "@iconify/react";
 
-const PersonCard = ({ employee, handleDeleteEmployee }) => {
-  // Parse the start date string into a Date object
-  const start = new Date(employee.startDate);
-  const today = new Date();
 
-  // Calculate difference in years (including months for precision)
-  const yearsWorked = today.getFullYear() - start.getFullYear();
-  const hasHadAnniversary =
-	 today.getMonth() > start.getMonth() ||
-	 (today.getMonth() === start.getMonth() &&
-		today.getDate() >= start.getDate());
-  const totalYears = hasHadAnniversary ? yearsWorked : yearsWorked - 1;
+const PersonCard = ({ handleDeleteEmployee }) => {
+	const { id } = useParams();
+  	const navigate = useNavigate();
+	const [employee, setEmployee] = useState(null);
+	const [loading, setLoading] = useState(true);
+	const[isEditing, setIsEditing] = useState(false);
+	const [formData, setformData] = useState ({
+		salary: employee?.salary || "",
+		location: employee?.location || "",
+		department: employee?.department || "",
+		skills: employee?.skills.join(", ") || "",
+		/*salary: "",
+  		location: "",
+  		department: "",
+ 		skills: "",*/
+	});
+	const [saveMessage, setSaveMessage] = useState("");
 
-  // Calculate months difference for more precise checks
-  const monthsWorked =
-	 (today.getFullYear() - start.getFullYear()) * 12 +
-	 (today.getMonth() - start.getMonth());
+	const handleChange = (e) =>{
+		setformData((prevState) =>{
+			return {...prevState, [e.target.name]: e.target.value}
+		})
+	}
 
-  //Add conditional reminders
-  let reminder = null;
-  if (totalYears > 0 && totalYears % 5 === 0) {
-	 // Exactly 5, 10, 15, etc. years
-	 reminder = (
-		<div className={styles.reminder}>
-		  <p>
-			 🎉 Schedule recognition meeting. Anniversary - {yearsWorked} years!
-		  </p>
-		</div>
-	 );
-  } else if (monthsWorked < 6) {
-	 // Less than 6 months
-	 reminder = (
-		<div className={styles.reminder}>
-		  <p>🔔 Schedule probation review.</p>
-		</div>
-	 );
-  }
+	const toggleEdit =()=>{
+		setIsEditing(!isEditing);
+	}
 
-  //Map animal names to emojis (Iconify: npm install @iconify/react)
-  function getAnimalEmoji(animalName) {
-	 const map = {
-		Owl: "🦉",
-		Cat: "🐱",
-		Dog: "🐶",
-		Fox: "🦊",
-		Bear: "🐻",
-		Tiger: "🐯",
-		Elephant: "🐘",
-		Lion: "🦁",
-		Rabbit: "🐰",
-		Dolphin: "🐬",
-		Penguin: "🐧",
-		Horse: "🐴",
-		Raven: "🐦‍⬛",
-	 };
+	const handleSave =()=>{
+		axios.patch(`http://localhost:3001/employees/${id}`, {
+			salary: formData.salary,
+      	location: formData.location,
+     		department: formData.department,
+			skills: formData.skills.split(",").map((skill) => skill.trim()),
+		})
+		.then((res) =>{
+			setEmployee(res.data)
+			setSaveMessage("Changes saved!");
+			setTimeout(() => {
+				setSaveMessage("");
+				setIsEditing(false)
+			}, 2000);
+		})
+		.catch((error)=>{
+			console.log("Error: ", error.message)
+		})
+		.finally(()=>{
+			setLoading(false)
+		})
+	}
 
-	 if (map[animalName]) {
-		return map[animalName];
-	 }
+	  useEffect(() => {
+		axios.get(`http://localhost:3001/employees/${id}`)
+		  .then((res) => {
+				setEmployee(res.data)
+				setformData({
+					salary:res.data.salary,
+					location:res.data.location,
+					department:res.data.department,
+					skills:res.data.skills.join(", "),
+				})	
+			})	
+		  .catch((err) => console.error("Error:", err))
+        .finally(() => setLoading(false));
+	 }, [id]);
 
-	 try {
+	const { totalYears, monthsWorked, reminder } = useYearsWorked(employee?.startDate);
+	if (loading) return <div>Loading...</div>;
+	if (!employee) return <div>Employee not found.</div>;
+
+	if (isEditing) {
 		return (
-		  <Icon
-			 icon={`twemoji:${animalName.toLowerCase()}`}
-			 width="24"
-			 height="24"
-		  />
-		);
-	 } catch {
-		return animalName;
-	 }
-  }
-
+			<div className='wrapper'>
+				<div className='main'>
+					<div className={styles.person}>
+					<h1>Edit Employee: {employee.name}</h1>
+					{saveMessage && <div className={styles.saveMessage}>{saveMessage}</div>}
+				   <form className="form">
+						<label htmlFor="salary">
+							Salary:
+							<input
+								id="salary"
+								type="number"
+								name="salary"
+								value={formData.salary}
+								onChange={handleChange}>
+							</input>
+						</label>
+						<label htmlFor="location">
+							Location:
+							<input
+								id="location"
+								type="text"
+								name="location"
+								value={formData.location}
+								onChange={handleChange}>
+							</input>
+						</label>
+						<label htmlFor="department">
+							Department:
+							<input
+								id="department"
+								type="text"
+								name="department"
+								value={formData.department}
+								onChange={handleChange}>
+							</input>
+						</label>
+						<label htmlFor="skills">
+							Skills (comma separated):
+							<input
+								id="skills"
+								type="text"
+								name="skills"
+								value={formData.skills}
+								onChange={handleChange}>
+							</input>
+						</label>
+					</form>
+					<div className={styles.buttonContainer}>
+						<button className="saveBtn" onClick={handleSave}>Save</button>
+						<button className="cancelBtn" onClick={toggleEdit}>Cancel</button>
+					</div>
+					</div>
+				</div>
+			</div>
+		)}
+			
+	
   return (
+	<div className="wrapper">
+	<div className="main">
 	 <div className={styles.person}>
+	 	<h1>{isEditing ? "Edit Employee" : "Employee Details"}</h1>
+
+		 <div className={styles.reminderContainer}>{reminder && <div className="reminder">{reminder}</div>}</div>
+
 		<h2 className={styles.name}>
-		  {employee.name} {getAnimalEmoji(employee.animal)}
+		  {employee.name} <Emoji animal={employee.animal} />
 		</h2>
-		<p className={styles.title}>
-		  <span>Title:</span> {employee.title}
+
+		<p className={styles.row}>
+		  <span className={styles.label}>Title:</span> 
+		  <span className={styles.value}>{employee.title}</span>
 		</p>
-		<p className={styles.salary}>Salary: {employee.salary}</p>
-		<p className={styles.phone}>Phone: {employee.phone}</p>
-		<p className={styles.email}>Email: {employee.email}</p>
-		<p className={styles.animal}>
-		  Favorite Animal: {getAnimalEmoji(employee.animal)} ({employee.animal})
+		<p className={styles.row}>
+			<span className={styles.label}>Salary:</span> <span className={styles.value}>{employee.salary} €</span>
 		</p>
-		<p>Start Date: {employee.startDate}</p>
-		<p>Location: {employee.location}</p>
-		<p>Department: {employee.department}</p>
-		<p>Skills: {employee.skills.join(", ")}</p>
+		<p className={styles.row}>
+			<span className={styles.label}>Phone:</span> 
+			<span className={styles.value}>{employee.phone}</span>
+		</p>
+		<p className={styles.row}>
+			<span className={styles.label}>Email:</span>
+			<span className={styles.value}>{employee.email}</span>
+		</p>
+		<p className={styles.row}>
+			<span className={styles.label}>Favorite Animal:</span>
+			<span className={styles.value}><Emoji animal={employee.animal} /> ({employee.animal})</span>
+		</p>
+		<p className={styles.row}>
+			<span className={styles.label}>Start Date:</span> 
+			<span className={styles.value}>{employee.startDate}</span>
+		</p>
+		<p className={styles.row}>
+			<span className={styles.label}>Location:</span> 
+			<span className={styles.value}>{employee.location} </span>
+		</p>
+		<p className={styles.row}>
+			<span className={styles.label}>Department:</span> 
+			<span className={styles.value}>{employee.department}</span>
+		</p>
+		<p className={styles.row}>
+			<span className={styles.label}>Skills:</span>
+			<span className={styles.value}>{employee.skills.join(", ")}</span>
+		</p>
+
 		<button className={styles.deleteBtn} onClick={() => handleDeleteEmployee(employee.id)}>
         Delete Person
       </button>
-		{reminder}
+		<div className={styles.buttonContainer}>
+			<button className="editBtn" onClick={toggleEdit}>Edit</button>
+			<button className="navButton" onClick={() => navigate("/")}>
+	        Return to Home
+	      </button>
+		</div>
+		
+	 </div>
+	 </div>
 	 </div>
   );
 };
