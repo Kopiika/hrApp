@@ -1,0 +1,16 @@
+.aboutPage h1{
+	font-size: 2rem;
+	margin-bottom: 1.5rem;
+
+}
+
+.aboutPage p{
+	margin-bottom: 2rem;
+}
+
+
+.buttonContainer{
+	display: flex;
+	justify-content: center;
+	width: 100%;
+}

@@ -1,27 +1,27 @@
-import axios from "axios"
 import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useYearsWorked } from "../hooks/useYearsWorked";
 import Emoji from "./Emoji";
 import styles from './PersonCard.module.css';
+import useAxios from "../hooks/useAxios";
 
 
 const PersonCard = ({ handleDeleteEmployee }) => {
+	const { get, patch } = useAxios();
 	const { id } = useParams();
   	const navigate = useNavigate();
+
 	const [employee, setEmployee] = useState(null);
 	const [loading, setLoading] = useState(true);
 	const[isEditing, setIsEditing] = useState(false);
+
 	const [formData, setformData] = useState ({
 		salary: employee?.salary || "",
 		location: employee?.location || "",
 		department: employee?.department || "",
 		skills: employee?.skills.join(", ") || "",
-		/*salary: "",
-  		location: "",
-  		department: "",
- 		skills: "",*/
 	});
+
 	const [saveMessage, setSaveMessage] = useState("");
 
 	const handleChange = (e) =>{
@@ -35,14 +35,14 @@ const PersonCard = ({ handleDeleteEmployee }) => {
 	}
 
 	const handleSave =()=>{
-		axios.patch(`http://localhost:3001/employees/${id}`, {
+		patch(`http://localhost:3001/employees/${id}`, {
 			salary: formData.salary,
       	location: formData.location,
      		department: formData.department,
 			skills: formData.skills.split(",").map((skill) => skill.trim()),
 		})
-		.then((res) =>{
-			setEmployee(res.data)
+		.then((response) =>{
+			setEmployee(response.data)
 			setSaveMessage("Changes saved!");
 			setTimeout(() => {
 				setSaveMessage("");
@@ -52,27 +52,25 @@ const PersonCard = ({ handleDeleteEmployee }) => {
 		.catch((error)=>{
 			console.log("Error: ", error.message)
 		})
-		.finally(()=>{
-			setLoading(false)
-		})
 	}
 
 	  useEffect(() => {
-		axios.get(`http://localhost:3001/employees/${id}`)
-		  .then((res) => {
-				setEmployee(res.data)
+		get(`http://localhost:3001/employees/${id}`)
+		  .then((response) => {
+				setEmployee(response.data)
 				setformData({
-					salary:res.data.salary,
-					location:res.data.location,
-					department:res.data.department,
-					skills:res.data.skills.join(", "),
+					salary:response.data.salary || "",
+					location:response.data.location || "",
+					department:response.data.department || "",
+					skills:Array.isArray(response.data.skills) ? response.data.skills.join(", ") : "",
 				})	
 			})	
 		  .catch((err) => console.error("Error:", err))
         .finally(() => setLoading(false));
-	 }, [id]);
+	 }, [id, get]);
 
 	const { totalYears, monthsWorked, reminder } = useYearsWorked(employee?.startDate);
+
 	if (loading) return <div>Loading...</div>;
 	if (!employee) return <div>Employee not found.</div>;
 
@@ -180,7 +178,7 @@ const PersonCard = ({ handleDeleteEmployee }) => {
 		</p>
 		<p className={styles.row}>
 			<span className={styles.label}>Skills:</span>
-			<span className={styles.value}>{employee.skills.join(", ")}</span>
+			<span className={styles.value}>{Array.isArray(employee.skills) ? employee.skills.join(", ") : ""}</span>
 		</p>
 
 		<button className={styles.deleteBtn} onClick={() => handleDeleteEmployee(employee.id)}>
