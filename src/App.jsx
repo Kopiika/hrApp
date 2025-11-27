@@ -17,7 +17,7 @@ function App() {
   const [employees, setEmployees] = useState([]);
 
   useEffect(()=>{
-    get("http://localhost:3001/employees")
+    get("/employees")
     .then((response) =>{
        setEmployees(response.data)
     })
@@ -25,7 +25,7 @@ function App() {
   }, [get]);
    
   const handleAddEmployee = (newEmployee) =>{
-    post("http://localhost:3001/employees", newEmployee)
+    post("/employees", newEmployee)
     .then((response) =>{
       setEmployees(prev => [...prev, response.data])
     })
@@ -33,19 +33,12 @@ function App() {
   }
 
   const handleDeleteEmployee = (id) => {
-    remove(`http://localhost:3001/employees/${id}`)
+    remove(`/employees/${id}`)
     .then(() =>{
       setEmployees(employees.filter((employee) => employee.id !==id))
     })
     }
   
-  /*const handleUpdateEmployee = (id, updatedEmployee) => {
-    patch(`http://localhost:3001/employees/${id}`, updatedEmployee)
-    .then((data) =>{
-      setEmployees(employees.map((employee) => employee.id === id ? response.data : employee))
-    })
-    .catch(err => console.error(err));
-  }*/
 
   return (
     <>

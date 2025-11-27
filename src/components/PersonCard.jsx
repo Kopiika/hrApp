@@ -35,7 +35,7 @@ const PersonCard = ({ handleDeleteEmployee }) => {
 	}
 
 	const handleSave =()=>{
-		patch(`http://localhost:3001/employees/${id}`, {
+		patch(`/employees/${id}`, {
 			salary: formData.salary,
       	location: formData.location,
      		department: formData.department,
@@ -55,7 +55,7 @@ const PersonCard = ({ handleDeleteEmployee }) => {
 	}
 
 	  useEffect(() => {
-		get(`http://localhost:3001/employees/${id}`)
+		get(`/employees/${id}`)
 		  .then((response) => {
 				setEmployee(response.data)
 				setformData({
