@@ -1,4 +1,3 @@
-import { useState } from "react";
 import styles from "./PersonList.module.css";
 import SummaryPersonCard from "../components/SummaryPersonCard";
 

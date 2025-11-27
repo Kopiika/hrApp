@@ -10,10 +10,10 @@ function EmployeeForm ({ onSubmit }) {
     phone: "",
     email: "",
     animal: "",
-    startDate: "",     // очікуємо формат YYYY-MM-DD (input type="date")
+    startDate: "",     
     location: "",
     department: "",
-    skills: "",         // користувач вводить "HTML, CSS, JS" — ми перетворимо в масив
+    skills: "",         
 	})
 
 	const [errorMessage, setErrorMessage] = useState("")

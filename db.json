@@ -7,7 +7,7 @@
       "email": "anna.virtanen@example.com",
       "animal": "Owl",
       "startDate": "2018-09-23",
-      "salary": "4960",
+      "salary": "4970",
       "location": "Tampere",
       "department": "Human Resources",
       "skills": [
@@ -186,6 +186,23 @@
         "React",
         "CSS",
         "UI&UX"
+      ]
+    },
+    {
+      "id": "1764240113651",
+      "name": "Anna Toivonen",
+      "title": "Developer",
+      "salary": 5000,
+      "phone": "046789123",
+      "email": "anna.toivonen@example.com",
+      "animal": "Capibara",
+      "startDate": "2025-09-01",
+      "location": "Helsinki",
+      "department": "IT",
+      "skills": [
+        "React",
+        "SQL",
+        "QA"
       ]
     }
   ]
