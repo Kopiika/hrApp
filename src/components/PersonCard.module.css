@@ -61,28 +61,6 @@
  }
  
  
- .deleteBtn{
-	position: absolute;
-	top: 1rem;
-	right: 1rem;
-	font-weight: 500;
-	display: flex;
-	align-items: center;
-	gap: 0.3rem;
-	background-color: inherit;
-	border: none;
-	cursor: pointer;
-	font-weight: 500;
-	color: rgb(83, 82, 82);
-	font-size: 0.9rem;
- }
-
-
- .deleteBtn:hover{
-	color: red;
-	text-decoration: underline;
- }
-
  .saveMessage {
 	color: green;
 	margin-bottom: 10px;

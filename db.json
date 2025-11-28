@@ -172,23 +172,6 @@
       ]
     },
     {
-      "id": "1763719993416",
-      "name": "Eleonora Kopiika",
-      "title": "Developer",
-      "salary": 4000,
-      "phone": "0453211234",
-      "email": "eleonora.kopiika@example.com",
-      "animal": "Cat",
-      "startDate": "2025-11-03",
-      "location": "Vantaa",
-      "department": "IT",
-      "skills": [
-        "React",
-        "CSS",
-        "UI&UX"
-      ]
-    },
-    {
       "id": "1764240113651",
       "name": "Anna Toivonen",
       "title": "Developer",

@@ -1,14 +1,17 @@
 import styles from "./PersonList.module.css";
 import SummaryPersonCard from "../components/SummaryPersonCard";
 
-const PersonList = ({employees}) => {
+const PersonList = ({employees, deleteMessage}) => {
 
   return (
-    <div className={styles.personList}>
-      {employees.map((employee) => (
-        <SummaryPersonCard key={employee.id} employee={employee} />
-      ))}
-    </div>
+    <>
+      {deleteMessage && <div className={styles.deleteMessage}>{deleteMessage}</div>}
+      <div className={styles.personList}>
+        {employees.map((employee) => (
+          <SummaryPersonCard key={employee.id} employee={employee} />
+        ))}
+      </div>
+    </>
   );
 };
 

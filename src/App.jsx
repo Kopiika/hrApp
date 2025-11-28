@@ -15,6 +15,7 @@ function App() {
   const { get, post, remove } = useAxios();
   //Стан — тут (спільний для всіх сторінок)
   const [employees, setEmployees] = useState([]);
+  const [deleteMessage, setDeleteMessage] = useState("");
 
   useEffect(()=>{
     get("/employees")
@@ -32,10 +33,23 @@ function App() {
     .catch(err => console.error(err));
   }
 
-  const handleDeleteEmployee = (id) => {
+  const handleDeleteEmployee = (id, navigate) => {
+    console.log("Deleting employee with ID:", id);
     remove(`/employees/${id}`)
     .then(() =>{
-      setEmployees(employees.filter((employee) => employee.id !==id))
+      setEmployees(prev => prev.filter((e) => e.id !==id))
+      setDeleteMessage("Employee successfully deleted!");
+      console.log("Delete message set");
+      navigate("/");
+      
+      setTimeout(() => {
+        setDeleteMessage("");  
+      }, 2000);
+    })
+    .catch(err => {
+      console.error(err);
+      setDeleteMessage("Error deleting employee.");
+      setTimeout(() => setDeleteMessage(""), 2000);
     })
     }
   
@@ -48,8 +62,9 @@ function App() {
            <div className='main'>
               <Routes>
                 {/* 🔸 передаємо employees у PersonList */}
-                <Route path="/" element={<PersonList employees={employees} handleDeleteEmployee={handleDeleteEmployee} />} />
-                <Route path="/employees/:id" element={<PersonCard handleDeleteEmployee={handleDeleteEmployee}/>} />
+                <Route path="/" element={<PersonList employees={employees} deleteMessage={deleteMessage}/>} />
+                <Route path="/employees/:id" element={<PersonCard 
+                handleDeleteEmployee={handleDeleteEmployee}/>} />
                 <Route path="/about" element={<About/>} />
                 {/* 🔸 передаємо функцію у AddEmployee */}
                 <Route path="/add" element={<AddEmployee onAddEmployee={handleAddEmployee}/>} />

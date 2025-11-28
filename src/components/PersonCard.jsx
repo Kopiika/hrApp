@@ -4,7 +4,16 @@ import { useYearsWorked } from "../hooks/useYearsWorked";
 import Emoji from "./Emoji";
 import styles from './PersonCard.module.css';
 import useAxios from "../hooks/useAxios";
-
+import { IconButton } from "@mui/material";
+import DeleteIcon from "@mui/icons-material/Delete";
+import {
+	Dialog,
+	DialogActions,
+	DialogContent,
+	DialogContentText,
+	DialogTitle,
+	Button
+ } from "@mui/material";
 
 const PersonCard = ({ handleDeleteEmployee }) => {
 	const { get, patch } = useAxios();
@@ -15,6 +24,18 @@ const PersonCard = ({ handleDeleteEmployee }) => {
 	const [loading, setLoading] = useState(true);
 	const[isEditing, setIsEditing] = useState(false);
 
+	const [open, setOpen] = useState(false);
+	const openDialog = () => {
+		console.log("Dialog opened");
+		setOpen(true);
+	 };
+  	const closeDialog = () => setOpen(false);
+	  const confirmDelete = () => {
+		console.log("Confirm delete triggered");
+		closeDialog();
+		handleDeleteEmployee(id, navigate);
+	 };
+
 	const [formData, setformData] = useState ({
 		salary: employee?.salary || "",
 		location: employee?.location || "",
@@ -23,6 +44,7 @@ const PersonCard = ({ handleDeleteEmployee }) => {
 	});
 
 	const [saveMessage, setSaveMessage] = useState("");
+
 
 	const handleChange = (e) =>{
 		setformData((prevState) =>{
@@ -181,9 +203,39 @@ const PersonCard = ({ handleDeleteEmployee }) => {
 			<span className={styles.value}>{Array.isArray(employee.skills) ? employee.skills.join(", ") : ""}</span>
 		</p>
 
-		<button className={styles.deleteBtn} onClick={() => handleDeleteEmployee(employee.id)}>
-        Delete Person
-      </button>
+		<IconButton
+			aria-label="delete"
+			onClick={openDialog}
+			sx={{
+				position: "absolute",
+				top: "10px",
+				right: "10px",
+				color: "#4ca9ca",
+				transition: "all 0.3s ease", 
+				"&:hover": {
+					color: "red", 
+					backgroundColor: "rgba(255, 0, 0, 0.1)"}
+			}}>
+		<DeleteIcon />
+		</IconButton>
+
+		{/* 🔥 Material UI Confirm Dialog */}
+      <Dialog open={open} onClose={closeDialog}>
+        <DialogTitle>Confirm Delete</DialogTitle>
+
+        <DialogContent>
+          <DialogContentText>
+            Do you really want to delete this employee?
+          </DialogContentText>
+        </DialogContent>
+
+        <DialogActions>
+          <Button onClick={closeDialog}>No</Button>
+          <Button onClick={confirmDelete} color="error" variant="contained">
+            Yes
+          </Button>
+        </DialogActions>
+      </Dialog>
 		<div className={styles.buttonContainer}>
 			<button className="editBtn" onClick={toggleEdit}>Edit</button>
 			<button className="navButton" onClick={() => navigate("/")}>
