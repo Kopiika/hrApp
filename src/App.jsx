@@ -9,6 +9,7 @@ import PersonCard from "./components/PersonCard";
 import SummaryPersonCard from "./components/SummaryPersonCard";
 import AddEmployee from "./pages/AddEmployee";
 import About from "./pages/About";
+import EmployeePage from "./pages/EmployeesPage";
 
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
   useEffect(()=>{
     get("/employees")
     .then((response) =>{
+      //console.log("API data:", response.data);
        setEmployees(response.data)
     })
     .catch(err => console.error(err));
@@ -63,6 +65,7 @@ function App() {
               <Routes>
                 {/* 🔸 передаємо employees у PersonList */}
                 <Route path="/" element={<PersonList employees={employees} deleteMessage={deleteMessage}/>} />
+                <Route path="/table" element={<EmployeePage handleDeleteEmployee={handleDeleteEmployee}/>} />
                 <Route path="/employees/:id" element={<PersonCard 
                 handleDeleteEmployee={handleDeleteEmployee}/>} />
                 <Route path="/about" element={<About/>} />

@@ -1,9 +1,11 @@
 import styles from './Footer.module.css';
+import { Typography, Box } from "@mui/material";
+
 const Footer = () => {
 	return (
-	  <footer className={styles.footer}>
-		 &copy; WP25K
-	  </footer>
+	  <Box className={styles.footer}>
+		 <Typography variant="body2">&copy; WP25K</Typography>
+	  </Box>
 	);
  };
  
