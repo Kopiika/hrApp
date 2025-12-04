@@ -1,23 +1,6 @@
 {
   "employees": [
     {
-      "name": "Anna Virtanen",
-      "title": "HR Manager",
-      "phone": "050-1234567",
-      "email": "anna.virtanen@example.com",
-      "animal": "Owl",
-      "startDate": "2018-09-23",
-      "salary": "4970",
-      "location": "Tampere",
-      "department": "Human Resources",
-      "skills": [
-        "Recruiting",
-        "Communication",
-        "Employee Relations"
-      ],
-      "id": "1"
-    },
-    {
       "id": "2",
       "name": "Mikko Laine",
       "title": "Software Engineer",
@@ -33,7 +16,8 @@
         "React",
         "Node.js",
         "CSS"
-      ]
+      ],
+      "favorite": false
     },
     {
       "id": "3",
@@ -50,7 +34,8 @@
         "SEO",
         "Content Creation",
         "Social Media"
-      ]
+      ],
+      "favorite": false
     },
     {
       "id": "4",
@@ -67,7 +52,8 @@
         "Excel",
         "Forecasting",
         "Reporting"
-      ]
+      ],
+      "favorite": false
     },
     {
       "id": "5",
@@ -84,7 +70,8 @@
         "Figma",
         "User Research",
         "Prototyping"
-      ]
+      ],
+      "favorite": false
     },
     {
       "id": "6",
@@ -101,7 +88,8 @@
         "Python",
         "Machine Learning",
         "SQL"
-      ]
+      ],
+      "favorite": false
     },
     {
       "id": "7",
@@ -152,7 +140,8 @@
         "Problem Solving",
         "Communication",
         "Team Leadership"
-      ]
+      ],
+      "favorite": false
     },
     {
       "id": "10",
@@ -169,7 +158,8 @@
         "Networking",
         "Security",
         "Linux"
-      ]
+      ],
+      "favorite": false
     },
     {
       "id": "1764240113651",
@@ -186,7 +176,8 @@
         "React",
         "SQL",
         "QA"
-      ]
+      ],
+      "favorite": false
     }
   ]
 }

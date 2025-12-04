@@ -1,10 +1,11 @@
 import styles from './Header.module.css';
 import { NavLink } from "react-router-dom";
+import { Typography, Box } from "@mui/material";
 
 const Header = () => {
 	return (
-	  <header className={styles.header}>
-		 <h1 className={styles.logo}>HR App</h1>
+	  <Box className={styles.header}>
+		 <Typography variant='h5' className={styles.logo}>HR App</Typography>
 		 <nav className={styles.navMenu}>
 
 			<NavLink 
@@ -14,6 +15,15 @@ const Header = () => {
 			} end
 			>Home
 			</NavLink> 
+
+			<NavLink
+          to="/table"
+          className={({ isActive }) =>
+            `${styles.link} ${isActive ? styles.active : ""}`
+          }
+        >
+          Employees table
+        </NavLink>
 
 			<NavLink
           to="/add"
@@ -34,7 +44,7 @@ const Header = () => {
 			 </NavLink>
 			
 	    </nav>
-	  </header>
+	  </Box>
 	);
  };
  

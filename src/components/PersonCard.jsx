@@ -6,13 +6,14 @@ import styles from './PersonCard.module.css';
 import useAxios from "../hooks/useAxios";
 import { IconButton } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
+import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn';
 import {
 	Dialog,
 	DialogActions,
 	DialogContent,
 	DialogContentText,
 	DialogTitle,
-	Button
+	Button,
  } from "@mui/material";
 
 const PersonCard = ({ handleDeleteEmployee }) => {
@@ -91,7 +92,7 @@ const PersonCard = ({ handleDeleteEmployee }) => {
         .finally(() => setLoading(false));
 	 }, [id, get]);
 
-	const { totalYears, monthsWorked, reminder } = useYearsWorked(employee?.startDate);
+	const { reminder } = useYearsWorked(employee?.startDate);
 
 	if (loading) return <div>Loading...</div>;
 	if (!employee) return <div>Employee not found.</div>;
@@ -101,54 +102,56 @@ const PersonCard = ({ handleDeleteEmployee }) => {
 			<div className='wrapper'>
 				<div className='main'>
 					<div className={styles.person}>
-					<h1>Edit Employee: {employee.name}</h1>
-					{saveMessage && <div className={styles.saveMessage}>{saveMessage}</div>}
-				   <form className="form">
-						<label htmlFor="salary">
-							Salary:
-							<input
-								id="salary"
-								type="number"
-								name="salary"
-								value={formData.salary}
-								onChange={handleChange}>
-							</input>
-						</label>
-						<label htmlFor="location">
-							Location:
-							<input
-								id="location"
-								type="text"
-								name="location"
-								value={formData.location}
-								onChange={handleChange}>
-							</input>
-						</label>
-						<label htmlFor="department">
-							Department:
-							<input
-								id="department"
-								type="text"
-								name="department"
-								value={formData.department}
-								onChange={handleChange}>
-							</input>
-						</label>
-						<label htmlFor="skills">
-							Skills (comma separated):
-							<input
-								id="skills"
-								type="text"
-								name="skills"
-								value={formData.skills}
-								onChange={handleChange}>
-							</input>
-						</label>
-					</form>
-					<div className={styles.buttonContainer}>
-						<button className="saveBtn" onClick={handleSave}>Save</button>
-						<button className="cancelBtn" onClick={toggleEdit}>Cancel</button>
-					</div>
+							<h1 >Edit Employee: {employee.name}
+							</h1>
+							{saveMessage && <div className={styles.saveMessage}>{saveMessage}</div>}
+							<form className="form">
+								<label htmlFor="salary">
+									Salary:
+									<input
+										id="salary"
+										type="number"
+										name="salary"
+										value={formData.salary}
+										onChange={handleChange}>
+									</input>
+								</label>
+								<label htmlFor="location">
+									Location:
+									<input
+										id="location"
+										type="text"
+										name="location"
+										value={formData.location}
+										onChange={handleChange}>
+									</input>
+								</label>
+								<label htmlFor="department">
+									Department:
+									<input
+										id="department"
+										type="text"
+										name="department"
+										value={formData.department}
+										onChange={handleChange}>
+									</input>
+								</label>
+								<label htmlFor="skills">
+									Skills (comma separated):
+									<input
+										id="skills"
+										type="text"
+										name="skills"
+										value={formData.skills}
+										onChange={handleChange}>
+									</input>
+								</label>
+							</form>
+							<div className={styles.buttonContainer}>
+								<button className="saveBtn" onClick={handleSave}>Save</button>
+								<button className="cancelBtn" onClick={toggleEdit}>Cancel</button>
+							</div>
+						
 					</div>
 				</div>
 			</div>
@@ -203,22 +206,6 @@ const PersonCard = ({ handleDeleteEmployee }) => {
 			<span className={styles.value}>{Array.isArray(employee.skills) ? employee.skills.join(", ") : ""}</span>
 		</p>
 
-		<IconButton
-			aria-label="delete"
-			onClick={openDialog}
-			sx={{
-				position: "absolute",
-				top: "10px",
-				right: "10px",
-				color: "#4ca9ca",
-				transition: "all 0.3s ease", 
-				"&:hover": {
-					color: "red", 
-					backgroundColor: "rgba(255, 0, 0, 0.1)"}
-			}}>
-		<DeleteIcon />
-		</IconButton>
-
 		{/* 🔥 Material UI Confirm Dialog */}
       <Dialog open={open} onClose={closeDialog}>
         <DialogTitle>Confirm Delete</DialogTitle>
@@ -238,9 +225,38 @@ const PersonCard = ({ handleDeleteEmployee }) => {
       </Dialog>
 		<div className={styles.buttonContainer}>
 			<button className="editBtn" onClick={toggleEdit}>Edit</button>
-			<button className="navButton" onClick={() => navigate("/")}>
-	        Return to Home
-	      </button>
+
+			<IconButton
+				aria-label="delete"
+				onClick={openDialog}
+				sx={{
+					color: "#4ca9ca",
+					transition: "all 0.3s ease", 
+					"&:hover": {
+						color: "red", 
+						backgroundColor: "rgba(255, 0, 0, 0.1)"}
+				}}>
+				<DeleteIcon />
+			</IconButton>
+
+			<IconButton
+				aria-label="return"
+				onClick={() => navigate("/table")}
+				sx={{
+					color: "#4ca9ca",
+					transition: "all 0.3s ease",
+					position: "absolute",
+					top: "10px",
+					right: "10px",
+					"&:hover": {
+						color: "#4ca9ca",
+						backgroundColor: "rgba(2, 2, 2, 0.1)",
+					},
+				}}
+				>
+				<KeyboardReturnIcon />
+			</IconButton>
+
 		</div>
 		
 	 </div>
