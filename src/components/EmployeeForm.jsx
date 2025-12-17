@@ -102,6 +102,7 @@ function EmployeeForm({ onSubmit }) {
 
         <Box
           component="form"
+          
           className={styles.form}
           onSubmit={handleSubmit}
           noValidate
