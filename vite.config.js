@@ -9,7 +9,7 @@ export default defineConfig({
       "/employees": {
         target: "https://localhost:3001",
         changeOrigin: true,
-        secure: false,
+        //secure: false,
       },
     },
   },
