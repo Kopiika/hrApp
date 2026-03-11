@@ -6,6 +6,10 @@ The application allows you to view, add, and edit employee information, with all
 
 >The project is deployed on Render, where both frontend and backend run in a single process.
 
+![Dashboard](docs/screenshots/dashboard-img.png)
+
+![Employees](docs/screenshots/table-img.png)
+
 🔗 **Live demo:** _(https://hrapp-xsbf.onrender.com/)_
 
 ---
