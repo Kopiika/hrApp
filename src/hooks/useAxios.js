@@ -1,26 +1,22 @@
 import axios from "axios";
-//import { useCallback } from "react";
-
-//const api = axios.create({
-//  baseURL: "http://localhost:3001", 
-//});
+import { useCallback } from "react";
 
 const useAxios = () => {
-  const get = (url) => {
+  const get = useCallback((url) => {
     return axios.get(url);
-  };
+  }, []);
 
-  const post = (url, data) => {
+  const post = useCallback((url, data) => {
     return axios.post(url, data);
-  };
+  }, []);
 
-  const patch = (url, data) => {
+  const patch = useCallback((url, data) => {
     return axios.patch(url, data);
-  };
+  }, []);
 
-  const remove = (url) => {
+  const remove = useCallback((url) => {
     return axios.delete(url);
-  };
+  }, []);
 
   return { get, post, patch, remove };
 };
