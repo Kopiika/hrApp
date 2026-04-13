@@ -10,7 +10,7 @@ The application allows you to view, add, and edit employee information, with all
 
 ![Employees](docs/screenshots/table-img.png)
 
-🔗 **Live demo:** _(https://hrapp-xsbf.onrender.com/)_
+🔗 **Live demo:** [https://hrapp-xsbf.onrender.com](https://hrapp-xsbf.onrender.com)
 
 ---
 
