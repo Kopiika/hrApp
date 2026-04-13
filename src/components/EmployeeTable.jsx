@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useMemo } from "react";
+import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
 import useAxios from "../hooks/useAxios";
 
@@ -20,7 +21,8 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
-  Button
+  Button,
+  Skeleton,
 } from "@mui/material";
 
 import StarIcon from '@mui/icons-material/Star';
@@ -37,12 +39,13 @@ const departmentColors = {
   Finance: '#E57373'
 };
 
-export default function EmployeeTableWithFilters({ handleDeleteEmployee }) {
+function EmployeeTableWithFilters({ handleDeleteEmployee }) {
   const { get, patch } = useAxios();
   const navigate = useNavigate();
 
   const [employees, setEmployees] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [fetchError, setFetchError] = useState("");
 
   // ---------------- Confirm Delete Dialog ----------------
   const [open, setOpen] = useState(false);
@@ -71,7 +74,7 @@ export default function EmployeeTableWithFilters({ handleDeleteEmployee }) {
   useEffect(() => {
     get("/employees")
       .then(res => setEmployees(res.data))
-      .catch(err => console.error(err))
+      .catch(() => setFetchError("Failed to load employees. Please check that the server is running."))
       .finally(() => setLoading(false));
   }, [get]);
 
@@ -99,7 +102,14 @@ export default function EmployeeTableWithFilters({ handleDeleteEmployee }) {
     );
   }, [employees, filterName, filterTitle, filterDepartment, filterLocation, filterSalary]);
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) return (
+    <Box sx={{ p: 3 }}>
+      {[...Array(5)].map((_, i) => (
+        <Skeleton key={i} variant="rectangular" height={48} sx={{ mb: 1, borderRadius: 1 }} />
+      ))}
+    </Box>
+  );
+  if (fetchError) return <div style={{ color: "red", padding: "1rem" }}>{fetchError}</div>;
   if (!employees.length) return <div>No employees found.</div>;
 
   return (
@@ -245,3 +255,9 @@ export default function EmployeeTableWithFilters({ handleDeleteEmployee }) {
     </Box>
   );
 }
+
+EmployeeTableWithFilters.propTypes = {
+  handleDeleteEmployee: PropTypes.func.isRequired,
+};
+
+export default EmployeeTableWithFilters;

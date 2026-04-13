@@ -16,38 +16,41 @@ function App() {
   const { get, post, remove } = useAxios();
   const [employees, setEmployees] = useState([]);
   const [deleteMessage, setDeleteMessage] = useState("");
+  const [fetchError, setFetchError] = useState("");
+  const [addError, setAddError] = useState("");
 
   useEffect(()=>{
     get("/employees")
     .then((response) =>{
        setEmployees(response.data)
     })
-    .catch(err => console.error(err));
+    .catch(() => setFetchError("Failed to load employees. Please check that the server is running."));
   }, [get]);
-   
+
   const handleAddEmployee = (newEmployee) =>{
+    setAddError("");
     post("/employees", newEmployee)
     .then((response) =>{
       setEmployees(prev => [...prev, response.data])
     })
-    .catch(err => console.error(err));
+    .catch(() => {
+      setAddError("Failed to add employee. Please try again.");
+      setTimeout(() => setAddError(""), 3000);
+    });
   }
 
   const handleDeleteEmployee = (id, navigate) => {
-    console.log("Deleting employee with ID:", id);
     remove(`/employees/${id}`)
     .then(() =>{
       setEmployees(prev => prev.filter((e) => e.id !==id))
       setDeleteMessage("Employee successfully deleted!");
-      console.log("Delete message set");
       navigate("/");
-      
+
       setTimeout(() => {
-        setDeleteMessage("");  
+        setDeleteMessage("");
       }, 2000);
     })
-    .catch(err => {
-      console.error(err);
+    .catch(() => {
       setDeleteMessage("Error deleting employee.");
       setTimeout(() => setDeleteMessage(""), 2000);
     })
@@ -60,14 +63,13 @@ function App() {
         <div className='wrapper'>
            <Header/>
            <div className='main'>
+              {fetchError && <div style={{ color: "red", padding: "1rem" }}>{fetchError}</div>}
+              {addError && <div style={{ color: "red", padding: "1rem" }}>{addError}</div>}
               <Routes>
-                {/* 🔸 передаємо employees у PersonList */}
                 <Route path="/" element={<PersonList employees={employees} deleteMessage={deleteMessage}/>} />
                 <Route path="/table" element={<EmployeePage handleDeleteEmployee={handleDeleteEmployee}/>} />
-                <Route path="/employees/:id" element={<PersonCard 
-                handleDeleteEmployee={handleDeleteEmployee}/>} />
+                <Route path="/employees/:id" element={<PersonCard handleDeleteEmployee={handleDeleteEmployee}/>} />
                 <Route path="/about" element={<About/>} />
-                {/* 🔸 передаємо функцію у AddEmployee */}
                 <Route path="/add" element={<AddEmployee onAddEmployee={handleAddEmployee}/>} />
               </Routes>
            </div>

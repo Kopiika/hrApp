@@ -1,10 +1,11 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+import PropTypes from "prop-types";
 import { useYearsWorked } from "../hooks/useYearsWorked";
 import Emoji from "./Emoji";
 import styles from './PersonCard.module.css';
 import useAxios from "../hooks/useAxios";
-import { IconButton } from "@mui/material";
+import { IconButton, Skeleton, Box } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn';
 import {
@@ -26,16 +27,12 @@ const PersonCard = ({ handleDeleteEmployee }) => {
 	const[isEditing, setIsEditing] = useState(false);
 
 	const [open, setOpen] = useState(false);
-	const openDialog = () => {
-		console.log("Dialog opened");
-		setOpen(true);
-	 };
+	const openDialog = () => setOpen(true);
   	const closeDialog = () => setOpen(false);
-	  const confirmDelete = () => {
-		console.log("Confirm delete triggered");
+	const confirmDelete = () => {
 		closeDialog();
 		handleDeleteEmployee(id, navigate);
-	 };
+	};
 
 	const [formData, setFormData] = useState ({
 		salary: employee?.salary || "",
@@ -45,6 +42,7 @@ const PersonCard = ({ handleDeleteEmployee }) => {
 	});
 
 	const [saveMessage, setSaveMessage] = useState("");
+	const [saveError, setSaveError] = useState("");
 
 
 	const handleChange = (e) =>{
@@ -72,8 +70,9 @@ const PersonCard = ({ handleDeleteEmployee }) => {
 				setIsEditing(false)
 			}, 2000);
 		})
-		.catch((error)=>{
-			console.log("Error: ", error.message)
+		.catch(() => {
+			setSaveError("Failed to save changes. Please try again.");
+			setTimeout(() => setSaveError(""), 3000);
 		})
 	}
 
@@ -88,14 +87,21 @@ const PersonCard = ({ handleDeleteEmployee }) => {
 					skills:Array.isArray(response.data.skills) ? response.data.skills.join(", ") : "",
 				})	
 			})	
-		  .catch((err) => console.error("Error:", err))
+		  .catch(() => setSaveError("Failed to load employee."))
         .finally(() => setLoading(false));
 	 }, [id, get]);
 
 	const { reminder } = useYearsWorked(employee?.startDate);
 
-	if (loading) return <div>Loading...</div>;
+	if (loading) return (
+		<Box sx={{ p: 3, maxWidth: 600, mx: "auto" }}>
+			<Skeleton variant="text" width="60%" height={40} />
+			<Skeleton variant="text" width="40%" />
+			<Skeleton variant="rectangular" height={200} sx={{ mt: 2, borderRadius: 1 }} />
+		</Box>
+	);
 	if (!employee) return <div>Employee not found.</div>;
+	if (saveError && !isEditing) return <div style={{ color: "red", padding: "1rem" }}>{saveError}</div>;
 
 	if (isEditing) {
 		return (
@@ -105,6 +111,7 @@ const PersonCard = ({ handleDeleteEmployee }) => {
 							<h1 >Edit Employee: {employee.name}
 							</h1>
 							{saveMessage && <div className={styles.saveMessage}>{saveMessage}</div>}
+							{saveError && <div style={{ color: "red" }}>{saveError}</div>}
 							<form className="form">
 								<label htmlFor="salary">
 									Salary:
@@ -263,6 +270,10 @@ const PersonCard = ({ handleDeleteEmployee }) => {
 	 </div>
 	 </div>
   );
+};
+
+PersonCard.propTypes = {
+	handleDeleteEmployee: PropTypes.func.isRequired,
 };
 
 export default PersonCard;

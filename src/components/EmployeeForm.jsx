@@ -1,4 +1,5 @@
 import { useState } from "react";
+import PropTypes from "prop-types";
 import styles from "./EmployeeForm.module.css";
 
 import { Card, CardContent, Typography, TextField, Button, Box,  } from "@mui/material";
@@ -156,5 +157,9 @@ function EmployeeForm({ onSubmit }) {
     </Card>
   );
 }
+
+EmployeeForm.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
+};
 
 export default EmployeeForm;

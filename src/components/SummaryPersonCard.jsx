@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import { useYearsWorked } from "../hooks/useYearsWorked";
 import Emoji from "./Emoji";
 import styles from "./SummaryPersonCard.module.css";
@@ -47,6 +48,18 @@ const SummaryPersonCard = ({ employee }) => {
       </CardActions>
     </Card>
   );
+};
+
+SummaryPersonCard.propTypes = {
+  employee: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    title: PropTypes.string,
+    department: PropTypes.string,
+    location: PropTypes.string,
+    animal: PropTypes.string,
+    startDate: PropTypes.string,
+  }).isRequired,
 };
 
 export default SummaryPersonCard;

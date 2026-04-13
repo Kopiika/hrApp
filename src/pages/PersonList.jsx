@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import styles from "./PersonList.module.css";
 import SummaryPersonCard from "../components/SummaryPersonCard";
 
@@ -13,6 +14,11 @@ const PersonList = ({employees, deleteMessage}) => {
       </div>
     </>
   );
+};
+
+PersonList.propTypes = {
+  employees: PropTypes.array.isRequired,
+  deleteMessage: PropTypes.string,
 };
 
 export default PersonList;

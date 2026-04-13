@@ -1,24 +1,26 @@
 import { useNavigate } from "react-router-dom";
+import PropTypes from "prop-types";
 import EmployeeForm from "../components/EmployeeForm";
 
  function AddEmployee({onAddEmployee}) {
 
-	// useNavigate з react-router для переходу після успішного додавання
   const navigate = useNavigate();
   function handleAdd(newEmployee) {
-	if (typeof onAddEmployee === "function") {
+    if (typeof onAddEmployee === "function") {
       onAddEmployee(newEmployee);
     }
-	 navigate("/");
+    navigate("/");
   }
-  
-	
-	return (
-		<main>
-			{/* Передаємо handleAdd як onSubmit до EmployeeForm */}
-			<EmployeeForm onSubmit={handleAdd}/>
-		</main>
-	);
+
+  return (
+    <main>
+      <EmployeeForm onSubmit={handleAdd}/>
+    </main>
+  );
  }
 
- export default AddEmployee
+AddEmployee.propTypes = {
+  onAddEmployee: PropTypes.func.isRequired,
+};
+
+export default AddEmployee

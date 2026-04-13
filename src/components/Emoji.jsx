@@ -1,4 +1,5 @@
 import { Icon } from "@iconify/react";
+import PropTypes from "prop-types";
 
 //Map animal names to emojis (Iconify: npm install @iconify/react)
 export default function Emoji({ animal, size = 24 }) {
@@ -23,3 +24,8 @@ export default function Emoji({ animal, size = 24 }) {
 
   return <Icon icon={`twemoji:${animal.toLowerCase()}`} width={size} height={size} />;
 }
+
+Emoji.propTypes = {
+  animal: PropTypes.string,
+  size: PropTypes.number,
+};
