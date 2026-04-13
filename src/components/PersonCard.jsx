@@ -41,7 +41,7 @@ const PersonCard = ({ handleDeleteEmployee }) => {
 		salary: employee?.salary || "",
 		location: employee?.location || "",
 		department: employee?.department || "",
-		skills: employee?.skills.join(", ") || "",
+		skills: employee?.skills?.join(", ") || "",
 	});
 
 	const [saveMessage, setSaveMessage] = useState("");
