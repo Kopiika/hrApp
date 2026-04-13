@@ -24,7 +24,7 @@
       "id": "3",
       "name": "Sari Korhonen",
       "title": "Marketing Specialist",
-      "salary": "3900",
+      "salary": 3900,
       "phone": "050-3456789",
       "email": "sari.korhonen@example.com",
       "animal": "Dolphin",
@@ -152,7 +152,7 @@
       "phone": "046-0123456",
       "email": "ville.koskinen@example.com",
       "animal": "Wolf",
-      "startDate": "2025-06-18",
+      "startDate": "2022-06-18",
       "location": "Oulu",
       "department": "IT",
       "skills": [
@@ -170,7 +170,7 @@
       "phone": "046789123",
       "email": "anna.toivonen@example.com",
       "animal": "Capibara",
-      "startDate": "2025-09-01",
+      "startDate": "2022-09-01",
       "location": "Helsinki",
       "department": "IT",
       "skills": [

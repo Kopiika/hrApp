@@ -37,7 +37,7 @@ const PersonCard = ({ handleDeleteEmployee }) => {
 		handleDeleteEmployee(id, navigate);
 	 };
 
-	const [formData, setformData] = useState ({
+	const [formData, setFormData] = useState ({
 		salary: employee?.salary || "",
 		location: employee?.location || "",
 		department: employee?.department || "",
@@ -48,7 +48,7 @@ const PersonCard = ({ handleDeleteEmployee }) => {
 
 
 	const handleChange = (e) =>{
-		setformData((prevState) =>{
+		setFormData((prevState) =>{
 			return {...prevState, [e.target.name]: e.target.value}
 		})
 	}
@@ -81,7 +81,7 @@ const PersonCard = ({ handleDeleteEmployee }) => {
 		get(`/employees/${id}`)
 		  .then((response) => {
 				setEmployee(response.data)
-				setformData({
+				setFormData({
 					salary:response.data.salary || "",
 					location:response.data.location || "",
 					department:response.data.department || "",

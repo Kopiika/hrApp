@@ -14,14 +14,12 @@ import EmployeePage from "./pages/EmployeesPage";
 
 function App() {
   const { get, post, remove } = useAxios();
-  //Стан — тут (спільний для всіх сторінок)
   const [employees, setEmployees] = useState([]);
   const [deleteMessage, setDeleteMessage] = useState("");
 
   useEffect(()=>{
     get("/employees")
     .then((response) =>{
-      //console.log("API data:", response.data);
        setEmployees(response.data)
     })
     .catch(err => console.error(err));
