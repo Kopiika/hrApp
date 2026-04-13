@@ -13,7 +13,7 @@ const navItems = [
 const Header = () => {
   return (
     <AppBar position="static" component="header">
-      <Toolbar sx={{ px: { xs: 2, md: 4 }, gap: 4, minHeight: "60px !important" }}>
+      <Toolbar sx={{ px: { xs: 2, md: 4 }, gap: 4, minHeight: "60px !important", justifyContent: "space-between" }}>
         <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
           <PeopleAltOutlinedIcon sx={{ color: "primary.main", fontSize: 20 }} />
           <Typography
