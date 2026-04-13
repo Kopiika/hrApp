@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import useAxios from "./hooks/useAxios";
 import './App.css'
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Alert } from "@mui/material";
 import Header from './components/Header';
 import Footer from './components/Footer';
 import PersonList from "./pages/PersonList";
@@ -63,8 +64,8 @@ function App() {
         <div className='wrapper'>
            <Header/>
            <div className='main'>
-              {fetchError && <div style={{ color: "red", padding: "1rem" }}>{fetchError}</div>}
-              {addError && <div style={{ color: "red", padding: "1rem" }}>{addError}</div>}
+              {fetchError && <Alert severity="error" sx={{ mb: 2 }}>{fetchError}</Alert>}
+              {addError && <Alert severity="error" sx={{ mb: 2 }}>{addError}</Alert>}
               <Routes>
                 <Route path="/" element={<PersonList employees={employees} deleteMessage={deleteMessage}/>} />
                 <Route path="/table" element={<EmployeePage handleDeleteEmployee={handleDeleteEmployee}/>} />

@@ -1,53 +1,13 @@
 .wrapper {
-	display: flex;
-	flex-direction: column;
-	min-height: 78vh;     
- }
- 
- .main{
-	width: 100%;
-  	padding: 1rem;
- }
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
 
- .persones-container{
-	display: flex;
-  flex-wrap: wrap;
-	flex-direction: row;
-	justify-content: center;
-	align-items: center;
-	gap: 3rem;
- }
- 
-
- h1 {
-	font-size: 1.5rem;
-	line-height: 1.1;
- }
- 
- .h2{
-	font-weight: 700;
-	font-size: 1.5rem;
-	margin-bottom: 8px;
- }
- 
- p{
-	font-size: 1rem;
- }
-
- .button{
-	font-weight: 500;
-	display: flex;
-	align-items: center;
-	justify-content: end;
-	gap: 1rem;
-	padding: 1rem 0rem;
-	background-color: inherit;
-	border: none;
-	cursor: pointer;
-	color: rgb(71, 61, 255);
-	font-size: 0.9rem;
- }
-
- .button:hover{
-	text-decoration: underline;
- }
+.main {
+  flex: 1;
+  padding: 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
+}

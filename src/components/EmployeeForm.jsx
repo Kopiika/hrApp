@@ -1,8 +1,6 @@
 import { useState } from "react";
 import PropTypes from "prop-types";
-import styles from "./EmployeeForm.module.css";
-
-import { Card, CardContent, Typography, TextField, Button, Box,  } from "@mui/material";
+import { Alert, Box, Button, Card, CardContent, TextField, Typography } from "@mui/material";
 
 function EmployeeForm({ onSubmit }) {
   const [formData, setFormData] = useState({
@@ -95,19 +93,17 @@ function EmployeeForm({ onSubmit }) {
   const isInvalid = (field) => touched && !formData[field].trim();
 
   return (
-    <Card className={styles.formContainer} elevation={0}>
-      <CardContent>
-        <Typography variant="h5" component="h2" className={styles.title}>
+    <Card elevation={0} sx={{ maxWidth: 600, mx: "auto" }}>
+      <CardContent sx={{ p: 3 }}>
+        <Typography variant="h6" component="h2" fontWeight={600} sx={{ mb: 3 }}>
           Add new employee
         </Typography>
 
         <Box
           component="form"
-          
-          className={styles.form}
           onSubmit={handleSubmit}
           noValidate
-			 sx={{ display: "flex", flexDirection: "column", gap: 2 }}
+          sx={{ display: "flex", flexDirection: "column", gap: 2 }}
         >
           {[
             { label: "First Name", name: "firstName" },
@@ -120,7 +116,7 @@ function EmployeeForm({ onSubmit }) {
             { label: "Start Date", name: "startDate", type: "date" },
             { label: "Location", name: "location" },
             { label: "Department", name: "department" },
-            { label: "Skills", name: "skills" },
+            { label: "Skills (comma-separated)", name: "skills" },
           ].map(({ label, name, type }) => (
             <TextField
               key={name}
@@ -129,26 +125,18 @@ function EmployeeForm({ onSubmit }) {
               type={type || "text"}
               value={formData[name]}
               onChange={handleChange}
-              placeholder={label}
-              variant="outlined"
-              size="small"
               fullWidth
               error={isInvalid(name)}
-              className={isInvalid(name) ? styles.invalid : ""}
-				  InputLabelProps={{ shrink: true }}
+              slotProps={{ inputLabel: { shrink: true } }}
             />
           ))}
 
           {errorMessage && (
-            <Typography className={styles.errorMessage}>{errorMessage}</Typography>
+            <Alert severity="error" variant="outlined">{errorMessage}</Alert>
           )}
 
-          <Box className={styles.buttonWrapper}>
-            <Button
-              type="submit"
-              variant="contained"
-              className="saveBtn"
-            >
+          <Box sx={{ display: "flex", justifyContent: "flex-end", mt: 1 }}>
+            <Button type="submit" variant="contained" disableElevation>
               Save Employee
             </Button>
           </Box>

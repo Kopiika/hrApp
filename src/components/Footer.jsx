@@ -1,12 +1,24 @@
-import styles from './Footer.module.css';
-import { Typography, Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 
 const Footer = () => {
-	return (
-	  <Box className={styles.footer}>
-		 <Typography variant="body2">&copy; WP25K</Typography>
-	  </Box>
-	);
- };
- 
- export default Footer;
+  return (
+    <Box
+      component="footer"
+      sx={{
+        borderTop: "1px solid",
+        borderColor: "divider",
+        py: 2,
+        px: 4,
+        display: "flex",
+        justifyContent: "center",
+        backgroundColor: "background.paper",
+      }}
+    >
+      <Typography variant="caption" color="text.secondary">
+        © {new Date().getFullYear()} HR App
+      </Typography>
+    </Box>
+  );
+};
+
+export default Footer;

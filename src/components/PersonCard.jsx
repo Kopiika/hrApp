@@ -3,277 +3,349 @@ import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { useYearsWorked } from "../hooks/useYearsWorked";
 import Emoji from "./Emoji";
-import styles from './PersonCard.module.css';
 import useAxios from "../hooks/useAxios";
-import { IconButton, Skeleton, Box } from "@mui/material";
-import DeleteIcon from "@mui/icons-material/Delete";
-import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn';
 import {
-	Dialog,
-	DialogActions,
-	DialogContent,
-	DialogContentText,
-	DialogTitle,
-	Button,
- } from "@mui/material";
+  Alert,
+  Avatar,
+  Box,
+  Button,
+  Card,
+  CardContent,
+  Chip,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  Divider,
+  IconButton,
+  Skeleton,
+  TextField,
+  Typography,
+} from "@mui/material";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
+import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
+import MailOutlineIcon from "@mui/icons-material/MailOutline";
+import PhoneOutlinedIcon from "@mui/icons-material/PhoneOutlined";
+import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
+import CalendarTodayOutlinedIcon from "@mui/icons-material/CalendarTodayOutlined";
+import EuroOutlinedIcon from "@mui/icons-material/EuroOutlined";
+import WorkOutlineIcon from "@mui/icons-material/WorkOutline";
+
+const AVATAR_PALETTE = [
+  "#3b82f6", "#8b5cf6", "#0891b2", "#059669",
+  "#d97706", "#dc2626", "#db2777", "#475569",
+];
+const getAvatarColor = (name = "") =>
+  AVATAR_PALETTE[(name.charCodeAt(0) ?? 0) % AVATAR_PALETTE.length];
+const getInitials = (name = "") =>
+  name.split(" ").map((n) => n[0]).join("").slice(0, 2).toUpperCase();
 
 const PersonCard = ({ handleDeleteEmployee }) => {
-	const { get, patch } = useAxios();
-	const { id } = useParams();
-  	const navigate = useNavigate();
+  const { get, patch } = useAxios();
+  const { id } = useParams();
+  const navigate = useNavigate();
 
-	const [employee, setEmployee] = useState(null);
-	const [loading, setLoading] = useState(true);
-	const[isEditing, setIsEditing] = useState(false);
+  const [employee, setEmployee] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [isEditing, setIsEditing] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [formData, setFormData] = useState({ salary: "", location: "", department: "", skills: "" });
+  const [saveMessage, setSaveMessage] = useState("");
+  const [saveError, setSaveError] = useState("");
 
-	const [open, setOpen] = useState(false);
-	const openDialog = () => setOpen(true);
-  	const closeDialog = () => setOpen(false);
-	const confirmDelete = () => {
-		closeDialog();
-		handleDeleteEmployee(id, navigate);
-	};
+  const openDialog = () => setOpen(true);
+  const closeDialog = () => setOpen(false);
+  const confirmDelete = () => { closeDialog(); handleDeleteEmployee(id, navigate); };
 
-	const [formData, setFormData] = useState ({
-		salary: employee?.salary || "",
-		location: employee?.location || "",
-		department: employee?.department || "",
-		skills: employee?.skills?.join(", ") || "",
-	});
+  const handleChange = (e) =>
+    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
 
-	const [saveMessage, setSaveMessage] = useState("");
-	const [saveError, setSaveError] = useState("");
+  const toggleEdit = () => setIsEditing((prev) => !prev);
 
+  const handleSave = () => {
+    patch(`/employees/${id}`, {
+      salary: formData.salary,
+      location: formData.location,
+      department: formData.department,
+      skills: formData.skills.split(",").map((s) => s.trim()),
+    })
+      .then((response) => {
+        setEmployee(response.data);
+        setSaveMessage("Changes saved!");
+        setTimeout(() => { setSaveMessage(""); setIsEditing(false); }, 2000);
+      })
+      .catch(() => {
+        setSaveError("Failed to save. Please try again.");
+        setTimeout(() => setSaveError(""), 3000);
+      });
+  };
 
-	const handleChange = (e) =>{
-		setFormData((prevState) =>{
-			return {...prevState, [e.target.name]: e.target.value}
-		})
-	}
+  useEffect(() => {
+    get(`/employees/${id}`)
+      .then((response) => {
+        setEmployee(response.data);
+        setFormData({
+          salary: response.data.salary || "",
+          location: response.data.location || "",
+          department: response.data.department || "",
+          skills: Array.isArray(response.data.skills) ? response.data.skills.join(", ") : "",
+        });
+      })
+      .catch(() => setSaveError("Failed to load employee."))
+      .finally(() => setLoading(false));
+  }, [id, get]);
 
-	const toggleEdit =()=>{
-		setIsEditing(!isEditing);
-	}
+  const { reminder } = useYearsWorked(employee?.startDate);
 
-	const handleSave =()=>{
-		patch(`/employees/${id}`, {
-			salary: formData.salary,
-      	location: formData.location,
-     		department: formData.department,
-			skills: formData.skills.split(",").map((skill) => skill.trim()),
-		})
-		.then((response) =>{
-			setEmployee(response.data)
-			setSaveMessage("Changes saved!");
-			setTimeout(() => {
-				setSaveMessage("");
-				setIsEditing(false)
-			}, 2000);
-		})
-		.catch(() => {
-			setSaveError("Failed to save changes. Please try again.");
-			setTimeout(() => setSaveError(""), 3000);
-		})
-	}
+  if (loading) return (
+    <Box sx={{ p: 3, maxWidth: 660, mx: "auto" }}>
+      <Skeleton variant="rectangular" height={96} sx={{ borderRadius: 2, mb: 2 }} />
+      <Skeleton variant="rectangular" height={240} sx={{ borderRadius: 2 }} />
+    </Box>
+  );
 
-	  useEffect(() => {
-		get(`/employees/${id}`)
-		  .then((response) => {
-				setEmployee(response.data)
-				setFormData({
-					salary:response.data.salary || "",
-					location:response.data.location || "",
-					department:response.data.department || "",
-					skills:Array.isArray(response.data.skills) ? response.data.skills.join(", ") : "",
-				})	
-			})	
-		  .catch(() => setSaveError("Failed to load employee."))
-        .finally(() => setLoading(false));
-	 }, [id, get]);
+  if (!employee) return (
+    <Box sx={{ p: 4, textAlign: "center" }}>
+      <Typography color="text.secondary">Employee not found.</Typography>
+    </Box>
+  );
 
-	const { reminder } = useYearsWorked(employee?.startDate);
+  if (saveError && !isEditing) return (
+    <Alert severity="error" sx={{ m: 3 }}>{saveError}</Alert>
+  );
 
-	if (loading) return (
-		<Box sx={{ p: 3, maxWidth: 600, mx: "auto" }}>
-			<Skeleton variant="text" width="60%" height={40} />
-			<Skeleton variant="text" width="40%" />
-			<Skeleton variant="rectangular" height={200} sx={{ mt: 2, borderRadius: 1 }} />
-		</Box>
-	);
-	if (!employee) return <div>Employee not found.</div>;
-	if (saveError && !isEditing) return <div style={{ color: "red", padding: "1rem" }}>{saveError}</div>;
+  const infoItems = [
+    { label: "Email", value: employee.email, icon: <MailOutlineIcon fontSize="small" /> },
+    { label: "Phone", value: employee.phone, icon: <PhoneOutlinedIcon fontSize="small" /> },
+    { label: "Location", value: employee.location, icon: <LocationOnOutlinedIcon fontSize="small" /> },
+    { label: "Start date", value: employee.startDate, icon: <CalendarTodayOutlinedIcon fontSize="small" /> },
+    { label: "Salary", value: `${employee.salary} €`, icon: <EuroOutlinedIcon fontSize="small" /> },
+    { label: "Department", value: employee.department, icon: <WorkOutlineIcon fontSize="small" /> },
+  ];
 
-	if (isEditing) {
-		return (
-			<div className='wrapper'>
-				<div className='main'>
-					<div className={styles.person}>
-							<h1 >Edit Employee: {employee.name}
-							</h1>
-							{saveMessage && <div className={styles.saveMessage}>{saveMessage}</div>}
-							{saveError && <div style={{ color: "red" }}>{saveError}</div>}
-							<form className="form">
-								<label htmlFor="salary">
-									Salary:
-									<input
-										id="salary"
-										type="number"
-										name="salary"
-										value={formData.salary}
-										onChange={handleChange}>
-									</input>
-								</label>
-								<label htmlFor="location">
-									Location:
-									<input
-										id="location"
-										type="text"
-										name="location"
-										value={formData.location}
-										onChange={handleChange}>
-									</input>
-								</label>
-								<label htmlFor="department">
-									Department:
-									<input
-										id="department"
-										type="text"
-										name="department"
-										value={formData.department}
-										onChange={handleChange}>
-									</input>
-								</label>
-								<label htmlFor="skills">
-									Skills (comma separated):
-									<input
-										id="skills"
-										type="text"
-										name="skills"
-										value={formData.skills}
-										onChange={handleChange}>
-									</input>
-								</label>
-							</form>
-							<div className={styles.buttonContainer}>
-								<button className="saveBtn" onClick={handleSave}>Save</button>
-								<button className="cancelBtn" onClick={toggleEdit}>Cancel</button>
-							</div>
-						
-					</div>
-				</div>
-			</div>
-		)}
-			
-	
+  if (isEditing) {
+    return (
+      <Box sx={{ maxWidth: 660, mx: "auto", mt: 3, px: 2 }}>
+        <Card elevation={0}>
+          <Box sx={{ px: 3, py: 2.5, borderBottom: "1px solid", borderColor: "divider" }}>
+            <Typography variant="h6" fontWeight={600}>
+              Edit: {employee.name}
+            </Typography>
+          </Box>
+          <CardContent sx={{ p: 3 }}>
+            {saveMessage && <Alert severity="success" sx={{ mb: 3 }}>{saveMessage}</Alert>}
+            {saveError && <Alert severity="error" sx={{ mb: 3 }}>{saveError}</Alert>}
+            <Box sx={{ display: "flex", flexDirection: "column", gap: 2.5 }}>
+              <TextField
+                label="Salary (€)"
+                name="salary"
+                type="number"
+                value={formData.salary}
+                onChange={handleChange}
+              />
+              <TextField
+                label="Location"
+                name="location"
+                value={formData.location}
+                onChange={handleChange}
+              />
+              <TextField
+                label="Department"
+                name="department"
+                value={formData.department}
+                onChange={handleChange}
+              />
+              <TextField
+                label="Skills (comma-separated)"
+                name="skills"
+                value={formData.skills}
+                onChange={handleChange}
+                helperText="e.g. React, TypeScript, Node.js"
+              />
+            </Box>
+          </CardContent>
+          <Box
+            sx={{
+              px: 3, pb: 3, pt: 2,
+              display: "flex", gap: 1.5,
+              borderTop: "1px solid", borderColor: "divider",
+            }}
+          >
+            <Button variant="contained" onClick={handleSave} disableElevation>
+              Save Changes
+            </Button>
+            <Button variant="outlined" color="inherit" onClick={toggleEdit}>
+              Cancel
+            </Button>
+          </Box>
+        </Card>
+      </Box>
+    );
+  }
+
   return (
-	<div className="wrapper">
-	<div className="main">
-	 <div className={styles.person}>
-	 	<h1>{isEditing ? "Edit Employee" : "Employee Details"}</h1>
+    <Box sx={{ maxWidth: 660, mx: "auto", mt: 3, px: 2 }}>
+      <Card elevation={0}>
+        {/* Header — avatar + name + back button */}
+        <Box
+          sx={{
+            px: 3, py: 3,
+            display: "flex", alignItems: "flex-start", gap: 2.5,
+            borderBottom: "1px solid", borderColor: "divider",
+          }}
+        >
+          <Avatar
+            sx={{
+              bgcolor: getAvatarColor(employee.name),
+              width: 56, height: 56,
+              fontSize: "1.125rem", fontWeight: 600, flexShrink: 0,
+            }}
+          >
+            {getInitials(employee.name)}
+          </Avatar>
 
-		 <div className={styles.reminderContainer}>{reminder && <div className="reminder">{reminder}</div>}</div>
+          <Box sx={{ flex: 1, minWidth: 0 }}>
+            <Box sx={{ display: "flex", alignItems: "center", gap: 1, flexWrap: "wrap" }}>
+              <Typography variant="h6" fontWeight={700} sx={{ lineHeight: 1.3 }}>
+                {employee.name}
+              </Typography>
+              <Emoji animal={employee.animal} size={18} />
+            </Box>
+            <Typography variant="body2" color="text.secondary" gutterBottom>
+              {employee.title}
+            </Typography>
+            {employee.department && (
+              <Chip
+                label={employee.department}
+                size="small"
+                variant="outlined"
+                sx={{ mt: 0.5, height: 22 }}
+              />
+            )}
+          </Box>
 
-		<h2 className={styles.name}>
-		  {employee.name} <Emoji animal={employee.animal} />
-		</h2>
+          <IconButton
+            aria-label="back"
+            size="small"
+            onClick={() => navigate(-1)}
+            sx={{ color: "text.secondary", flexShrink: 0 }}
+          >
+            <ArrowBackIcon fontSize="small" />
+          </IconButton>
+        </Box>
 
-		<p className={styles.row}>
-		  <span className={styles.label}>Title:</span> 
-		  <span className={styles.value}>{employee.title}</span>
-		</p>
-		<p className={styles.row}>
-			<span className={styles.label}>Salary:</span> <span className={styles.value}>{employee.salary} €</span>
-		</p>
-		<p className={styles.row}>
-			<span className={styles.label}>Phone:</span> 
-			<span className={styles.value}>{employee.phone}</span>
-		</p>
-		<p className={styles.row}>
-			<span className={styles.label}>Email:</span>
-			<span className={styles.value}>{employee.email}</span>
-		</p>
-		<p className={styles.row}>
-			<span className={styles.label}>Favorite Animal:</span>
-			<span className={styles.value}><Emoji animal={employee.animal} /> ({employee.animal})</span>
-		</p>
-		<p className={styles.row}>
-			<span className={styles.label}>Start Date:</span> 
-			<span className={styles.value}>{employee.startDate}</span>
-		</p>
-		<p className={styles.row}>
-			<span className={styles.label}>Location:</span> 
-			<span className={styles.value}>{employee.location} </span>
-		</p>
-		<p className={styles.row}>
-			<span className={styles.label}>Department:</span> 
-			<span className={styles.value}>{employee.department}</span>
-		</p>
-		<p className={styles.row}>
-			<span className={styles.label}>Skills:</span>
-			<span className={styles.value}>{Array.isArray(employee.skills) ? employee.skills.join(", ") : ""}</span>
-		</p>
+        <CardContent sx={{ p: 3 }}>
+          {reminder && (
+            <Alert
+              severity={reminder.includes("🎉") ? "success" : "warning"}
+              variant="outlined"
+              sx={{ mb: 3, "& .MuiAlert-message": { fontSize: "0.875rem" } }}
+            >
+              {reminder}
+            </Alert>
+          )}
 
-		{/* 🔥 Material UI Confirm Dialog */}
-      <Dialog open={open} onClose={closeDialog}>
-        <DialogTitle>Confirm Delete</DialogTitle>
+          {/* Info grid */}
+          <Box
+            sx={{
+              display: "grid",
+              gridTemplateColumns: { xs: "1fr", sm: "1fr 1fr" },
+              gap: 2.5,
+            }}
+          >
+            {infoItems.map(({ label, value, icon }) => (
+              <Box key={label} sx={{ display: "flex", alignItems: "flex-start", gap: 1.5 }}>
+                <Box sx={{ color: "text.secondary", mt: 0.25, flexShrink: 0 }}>{icon}</Box>
+                <Box>
+                  <Typography variant="caption" color="text.secondary" display="block">
+                    {label}
+                  </Typography>
+                  <Typography variant="body2" fontWeight={500}>
+                    {value}
+                  </Typography>
+                </Box>
+              </Box>
+            ))}
+          </Box>
 
+          {/* Skills */}
+          {Array.isArray(employee.skills) && employee.skills.length > 0 && (
+            <>
+              <Divider sx={{ my: 3 }} />
+              <Box>
+                <Typography
+                  variant="caption"
+                  color="text.secondary"
+                  display="block"
+                  gutterBottom
+                  sx={{ textTransform: "uppercase", letterSpacing: "0.04em", fontWeight: 600 }}
+                >
+                  Skills
+                </Typography>
+                <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.75 }}>
+                  {employee.skills.map((skill) => (
+                    <Chip key={skill} label={skill} size="small" variant="outlined" />
+                  ))}
+                </Box>
+              </Box>
+            </>
+          )}
+        </CardContent>
+
+        {/* Action bar */}
+        <Box
+          sx={{
+            px: 3, py: 2,
+            display: "flex", gap: 1.5,
+            borderTop: "1px solid", borderColor: "divider",
+          }}
+        >
+          <Button
+            variant="outlined"
+            size="small"
+            startIcon={<EditOutlinedIcon />}
+            onClick={toggleEdit}
+          >
+            Edit
+          </Button>
+          <Button
+            variant="outlined"
+            size="small"
+            color="error"
+            startIcon={<DeleteOutlineIcon />}
+            onClick={openDialog}
+          >
+            Delete
+          </Button>
+        </Box>
+      </Card>
+
+      {/* Delete dialog */}
+      <Dialog open={open} onClose={closeDialog} maxWidth="xs" fullWidth>
+        <DialogTitle sx={{ fontWeight: 600 }}>Delete employee?</DialogTitle>
         <DialogContent>
-          <DialogContentText>
-            Do you really want to delete this employee?
+          <DialogContentText sx={{ fontSize: "0.875rem" }}>
+            Are you sure you want to remove <strong>{employee.name}</strong>?
+            This action cannot be undone.
           </DialogContentText>
         </DialogContent>
-
-        <DialogActions>
-          <Button onClick={closeDialog}>No</Button>
-          <Button onClick={confirmDelete} color="error" variant="contained">
-            Yes
+        <DialogActions sx={{ px: 3, pb: 2.5 }}>
+          <Button variant="outlined" color="inherit" onClick={closeDialog}>
+            Cancel
+          </Button>
+          <Button variant="contained" color="error" disableElevation onClick={confirmDelete}>
+            Delete
           </Button>
         </DialogActions>
       </Dialog>
-		<div className={styles.buttonContainer}>
-			<button className="editBtn" onClick={toggleEdit}>Edit</button>
-
-			<IconButton
-				aria-label="delete"
-				onClick={openDialog}
-				sx={{
-					color: "#4ca9ca",
-					transition: "all 0.3s ease", 
-					"&:hover": {
-						color: "red", 
-						backgroundColor: "rgba(255, 0, 0, 0.1)"}
-				}}>
-				<DeleteIcon />
-			</IconButton>
-
-			<IconButton
-				aria-label="return"
-				onClick={() => navigate("/table")}
-				sx={{
-					color: "#4ca9ca",
-					transition: "all 0.3s ease",
-					position: "absolute",
-					top: "10px",
-					right: "10px",
-					"&:hover": {
-						color: "#4ca9ca",
-						backgroundColor: "rgba(2, 2, 2, 0.1)",
-					},
-				}}
-				>
-				<KeyboardReturnIcon />
-			</IconButton>
-
-		</div>
-		
-	 </div>
-	 </div>
-	 </div>
+    </Box>
   );
 };
 
 PersonCard.propTypes = {
-	handleDeleteEmployee: PropTypes.func.isRequired,
+  handleDeleteEmployee: PropTypes.func.isRequired,
 };
 
 export default PersonCard;

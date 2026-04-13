@@ -1,51 +1,46 @@
-import styles from './Header.module.css';
+import { AppBar, Toolbar, Typography, Box } from "@mui/material";
+import PeopleAltOutlinedIcon from "@mui/icons-material/PeopleAltOutlined";
 import { NavLink } from "react-router-dom";
-import { Typography, Box } from "@mui/material";
+import styles from "./Header.module.css";
+
+const navItems = [
+  { label: "Employees", to: "/", end: true },
+  { label: "Table view", to: "/table" },
+  { label: "Add Employee", to: "/add" },
+  { label: "About", to: "/about" },
+];
 
 const Header = () => {
-	return (
-	  <Box className={styles.header}>
-		 <Typography variant='h5' className={styles.logo}>HR App</Typography>
-		 <nav className={styles.navMenu}>
+  return (
+    <AppBar position="static" component="header">
+      <Toolbar sx={{ px: { xs: 2, md: 4 }, gap: 4, minHeight: "60px !important" }}>
+        <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+          <PeopleAltOutlinedIcon sx={{ color: "primary.main", fontSize: 20 }} />
+          <Typography
+            variant="subtitle1"
+            sx={{ fontWeight: 700, color: "text.primary", letterSpacing: "-0.02em" }}
+          >
+            HR App
+          </Typography>
+        </Box>
 
-			<NavLink 
-			to="/" 
-			className={({isActive}) => 
-				`${styles.link} ${isActive ? styles.active : ""}`
-			} end
-			>Home
-			</NavLink> 
+        <Box component="nav" sx={{ display: "flex", gap: 0.5 }}>
+          {navItems.map(({ label, to, end }) => (
+            <NavLink
+              key={to}
+              to={to}
+              end={end}
+              className={({ isActive }) =>
+                `${styles.link} ${isActive ? styles.active : ""}`
+              }
+            >
+              {label}
+            </NavLink>
+          ))}
+        </Box>
+      </Toolbar>
+    </AppBar>
+  );
+};
 
-			<NavLink
-          to="/table"
-          className={({ isActive }) =>
-            `${styles.link} ${isActive ? styles.active : ""}`
-          }
-        >
-          Employees table
-        </NavLink>
-
-			<NavLink
-          to="/add"
-          className={({ isActive }) =>
-            `${styles.link} ${isActive ? styles.active : ""}`
-          }
-        >
-          Add Employee
-        </NavLink>
-
-			 <NavLink
-			 to="/about"
-				className={({ isActive }) =>
-					`${styles.link} ${isActive ? styles.active : ""}`
-				}
-			>
-				About
-			 </NavLink>
-			
-	    </nav>
-	  </Box>
-	);
- };
- 
- export default Header;
+export default Header;

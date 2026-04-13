@@ -1,4 +1,5 @@
-import {useNavigate} from "react-router"
+import { useNavigate } from "react-router";
+import { Button } from "@mui/material";
 import styles from "./About.module.css";
 
  const About = () => {
@@ -20,7 +21,7 @@ import styles from "./About.module.css";
 					<p>
 					Est nisl porttitor mollis et tristique ac feugiat platea lorem iaculis elit hendrerit? Sit neque aenean lectus ridiculus sem urna fames. Quis amet euismod ut pellentesque maecenas tristique elit adipiscing. Habitant mattis fermentum, mollis dignissim malesuada felis venenatis. Habitant neque vivamus penatibus morbi consectetur arcu orci nullam penatibus fermentum. Etiam integer placerat egestas faucibus mauris cras ultrices lobortis a, dui iaculis vivamus. Quisque eleifend scelerisque consectetur scelerisque convallis vel netus.</p>
 					<div className={styles.buttonContainer}>
-						<button className="navButton" onClick={handleNavigate}>Return to Home</button>
+						<Button variant="outlined" onClick={handleNavigate}>Return to Home</Button>
 					</div>
 				</div>
 			</main>
